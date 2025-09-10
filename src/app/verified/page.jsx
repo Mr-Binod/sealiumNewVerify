@@ -26,7 +26,7 @@ const page = () => {
                 <Certificate />
             </motion.div>
         </div>
-    )
+    )  
 }
 
 export default page

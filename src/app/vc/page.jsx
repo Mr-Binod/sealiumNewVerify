@@ -50,10 +50,10 @@ const Page = () => {
             userDidId: userdid.value,
             urlLink: vcurl.value
         })
-        console.log(verifyVcUrl.data.message.payload, "verifyVcUrl");
+        console.log(verifyVcUrl.data.message, "verifyVcUrl");
         setTimeout(() => {
             if (verifyVcUrl.data.state === 200) {
-                setCertInfo(verifyVcUrl.data.message.payload)
+                setCertInfo(verifyVcUrl.data.message)
                 setVerified(true)
                 console.log(verifyVcUrl.data.message.payload, "certinfo in vc page");
                 return

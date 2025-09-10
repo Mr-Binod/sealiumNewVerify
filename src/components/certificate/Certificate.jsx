@@ -15,6 +15,7 @@ const Certificate = () => {
   // const {nbf} = certInfo
   // console.log(certInfo.vc.credentialSubject, "certinfo from store");
 
+  console.log(certInfo, "certinfo from store", certInfo.vc);
   const {
     userId,
     certificateName,
@@ -26,10 +27,9 @@ const Certificate = () => {
     request,
     requestDate,
     userDid,
-    issuerDid,
     ImagePath,
     DOB
-  } = certInfo.vc.credentialSubject;
+  } = certInfo.payload.vc.credentialSubject;
   const date = Number(Date.now().toString().slice(-6))
   // PDF 다운로드 핸들러 함수
   const handleDownloadPdf = async () => {
@@ -60,6 +60,11 @@ const Certificate = () => {
     pdf.save("certificate.pdf");
   };
 
+  console.log(certInfo.payload.issuseDate, "newdate11");
+  const newdate = new Date(certInfo.payload.issuseDate).toISOString().split("T")[0];
+  console.log(newdate, "newdate");
+
+
   return (
     <div className="font-noto-serif min-h-screen p-4 px-6 sm:p-8 sm:px-12 ">
       <div className="max-w-4xl mx-auto mt-20 sm:mt-15 " >
@@ -87,25 +92,25 @@ const Certificate = () => {
                 />
               </div>
               <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 break-words">이름 : {userName || '홍길동'}</h3>
-              <h4 className="text-base sm:text-xl ">{DOB}</h4>
+              <h4 className="text-base sm:text-xl ">생년월일 : {DOB}</h4>
             </div>
             <div className="lg:col-span-2 space-y-3 sm:space-y-4 ">
               <div className="gap-2 border-b-1 border-gray-300 pb-3 sm:pb-4 space-y-2">
                 <div>
-                  <label className=" text-sm sm:text-md font-bold">사용자 DID</label>
+                  <label className=" text-md sm:text-md font-bold">사용자</label>
                   <p className=" font-mono break-all">{userId}</p>
                 </div>
                 <div>
-                  <label className=" text-sm sm:text-md font-bold">수료증 이름</label>
+                  <label className=" text-md sm:text-md font-bold">수료증 이름</label>
                   <p className=" break-words">{certificateName}</p>
                 </div>
                 <div>
-                  <label className=" text-sm sm:text-md font-bold">발급자 DID</label>
+                  <label className=" text-md sm:text-md font-bold">발급자</label>
                   <p className=" font-mono break-all">{issuerId}</p>
                 </div>
                 <div>
-                  <label className=" text-sm sm:text-md font-bold">발급 날짜 </label>
-                  <p className="">{issueDate}</p>
+                  <label className=" text-md sm:text-md font-bold">발급 날짜 </label>
+                  <p className="text-sm">{newdate}</p>
                 </div>
               </div>
               <div className="mt-3 sm:mt-4 space-y-2 text-sm sm:text-md">
